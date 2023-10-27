@@ -1,3 +1,9 @@
+//
+// Chapter4.swift
+// CLIStoryTemplate
+//
+
+import Foundation
 
 class ChanelsStory {
     static let standard: ChanelsStory = ChanelsStory(name: "Traveler", career: "Freelancer", location: "beach", hobby: "coding")

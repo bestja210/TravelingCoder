@@ -114,8 +114,6 @@ func chapterFour(){
             return "Stay away from the beach; there's a storm coming!"
         }
     }
-    
-    let todayWeather = BeachWeather.sunny
     let weatherDescription = describeWeather(isCurrently: .sunny)
     print(weatherDescription)
 }

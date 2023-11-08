@@ -5,9 +5,20 @@
 
 import Foundation
 
+enum Job {
+    case developer
+    case doctor
+    case scientist
+    case lawyer
+}
+
+struct Person {
+    var name: String
+    var occupation: Job
+    let age: Int
+}
 // Universal Constants
 let storySingleton: StoryAssets = StoryAssets.shared
-let chapterNumber: Int = 1
 
 // User Choices
 // Cleveland or Port Huron Decision
@@ -15,7 +26,7 @@ var decisionOne: String = ""
 
 // User detail reader and implementer.
 // 1. Prompts user to imput needed detail.
-// 2. Stores input in local scoper constant named detail which is a string optional
+// 2. Stores input in local scope constant named detail which is a string optional
 // 3. Returns the contents of detail which is either the inputed string or nil
 // Note: Optional handling is passed to the variable declaration within the story
 func readerDetails(details: String) -> String? {
@@ -24,23 +35,22 @@ func readerDetails(details: String) -> String? {
     return detail
 }
 
-func chapterOne() {
+func chapterOne(number: Int) {
     // Collection of user input
     let mainCharacterName: String = readerDetails(details: "name")!
     let age: Int = Int(readerDetails(details: "age")!) ?? 25
     let job: String = readerDetails(details: "occupation")!
-    let partner: String = readerDetails(details: "best friends name")!
+    var partner: Person = Person(name: readerDetails(details: "best friends name")!, occupation: .developer, age: 28)
     
     // Storying user input in class for use later
     storySingleton.setName(name: mainCharacterName == "" ? "Howie" : mainCharacterName)
     storySingleton.setAge(age: age)
     storySingleton.setJob(job: job == "" ? "Developer" : job)
-    storySingleton.setPartner(partner: partner == "" ? "Howie" : partner)
     
     print("\n")
     
     // Begining of story
-    print("Chapter \(chapterNumber):\n")
+    print("Chapter \(number):\n")
     
     storySingleton.chapterIntro()
     
@@ -49,7 +59,11 @@ func chapterOne() {
     // Ive done this to allow user time to read each line one by one.
     sleep(2)
     
-    storySingleton.backgroundDescription()
+    storySingleton.backgroundDescription(partnerName: partner.name)
+    
+    sleep(2)
+    
+    print("\(partner.name) currently works as a \(partner.occupation).")
     
     sleep(2)
     
@@ -57,7 +71,7 @@ func chapterOne() {
     
     sleep(2)
     
-    storySingleton.firstDecision()
+    storySingleton.firstDecision(partnerName: partner.name)
     
     sleep(2)
     
@@ -69,12 +83,12 @@ func chapterOne() {
         
         switch decisionOne {
         case "1":
-            storySingleton.decisionResult(agreeWithSelf: false)
-            storySingleton.location(location: "Port Huron", destination: "Canada")
+            storySingleton.decisionResult(agreeWithSelf: false, partnerName: partner.name)
+            storySingleton.location(location: "Port Huron", destination: "Canada", partnerName: partner.name)
             
         case "2":
-            storySingleton.decisionResult(agreeWithSelf: true)
-            storySingleton.location(location: "Cleveland", destination: "southern USA")
+            storySingleton.decisionResult(agreeWithSelf: true, partnerName: partner.name)
+            storySingleton.location(location: "Cleveland", destination: "southern USA", partnerName: partner.name)
             
         default:
             print("You entered \(decisionOne) which is not a valid input")
